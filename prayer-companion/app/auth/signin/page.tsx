@@ -1,7 +1,6 @@
-// app/auth/signin/page.tsx
 'use client';
 
-import { useState } from 'react';
+import { useState, Suspense } from 'react';
 import { signIn } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
@@ -10,7 +9,8 @@ export const dynamic = 'force-dynamic';
 
 type Mode = 'login' | 'register';
 
-export default function SignInPage() {
+// المكون اللي شايل كل الشغل بتاعك والـ Logic والـ JSX
+function SignInForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get('callbackUrl') || '/';
@@ -239,5 +239,14 @@ export default function SignInPage() {
         </p>
       </div>
     </div>
+  );
+}
+
+// المكون الأساسي اللي Next.js بيطلبه متغلف بـ Suspense
+export default function SignInPage() {
+  return (
+    <Suspense fallback={<div className="min-h-screen bg-[#121e42] flex items-center justify-center text-white">جارٍ التحميل...</div>}>
+      <SignInForm />
+    </Suspense>
   );
 }
