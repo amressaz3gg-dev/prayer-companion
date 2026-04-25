@@ -1,3 +1,4 @@
+export const dynamic = 'force-dynamic';
 // app/auth/signin/page.tsx
 'use client';
 
