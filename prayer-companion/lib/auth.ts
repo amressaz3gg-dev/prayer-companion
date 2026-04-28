@@ -1,4 +1,3 @@
-// lib/auth.ts
 import { NextAuthOptions } from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 import CredentialsProvider from 'next-auth/providers/credentials';
@@ -10,14 +9,10 @@ export const authOptions: NextAuthOptions = {
   // @ts-ignore
   adapter: PrismaAdapter(prisma),
   providers: [
-    ...(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET
-      ? [
-          GoogleProvider({
-            clientId: process.env.GOOGLE_CLIENT_ID!,
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-          }),
-        ]
-      : []),
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID || '',
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET || '',
+    }),
     CredentialsProvider({
       name: 'credentials',
       credentials: {
@@ -61,17 +56,8 @@ export const authOptions: NextAuthOptions = {
       return session;
     },
     async signIn({ user, account }) {
-      if (account?.provider === 'google') {
-        const existingUser = await prisma.user.findUnique({
-          where: { email: user.email! },
-        });
-        if (!existingUser) {
-          await prisma.user.update({
-            where: { email: user.email! },
-            data: { role: 'USER' },
-          });
-        }
-      }
+      // السماح بتسجيل الدخول فوراً 
+      // (محول Prisma بيقوم بإنشاء الحساب تلقائياً في قاعدة البيانات لو كان المستخدم جديد)
       return true;
     },
   },
