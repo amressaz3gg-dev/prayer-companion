@@ -147,12 +147,12 @@ export function PrayerCard({ prayerKey, time, isLogged, loggedStatus }: PrayerCa
           </div>
 
           {/* Prayer name */}
-          <p className="text-white/60 text-sm mb-1">{meta.icon}</p>
-          <h3
-            className="text-white text-3xl font-bold text-center relative z-10"
-            style={{ fontFamily: 'Aref Ruqaa, serif' }}
-          >
-            {meta.arabicName}
+           <p className="text-[#121e42]/70 text-sm mb-1 drop-shadow-sm">{meta.icon}</p>
+           <h3
+           className="text-[#121e42] text-3xl font-bold text-center relative z-10 drop-shadow-md"
+           style={{ fontFamily: 'Aref Ruqaa, serif' }}
+                >
+         {meta.arabicName}
           </h3>
         </div>
 
